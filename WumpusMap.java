@@ -17,4 +17,12 @@ public class WumpusMap {
 	public Integer getNumberOfCaverns(){
 		return numberOfCaverns;
 	}
+	
+	public Cavern[][] getCaverns(){
+		return caverns;
+	}
+	
+	public void setBoundaryCavern(int boundaryX, int boundaryY){
+		caverns[boundaryX][boundaryY].setIsBoundary(true);
+	}
 }
