@@ -38,30 +38,50 @@ public class MapTest {
 	
 	@Test
 	public void testWumpusMovementIsRandom(){
-		WumpusMap boundedMap = new WumpusMap(5,5);
-		boundedMap.setWumpusX(2);
-		boundedMap.setWumpusY(2);
+		WumpusMap gameMap = new WumpusMap(5,5);
+		gameMap.setWumpusX(2);
+		gameMap.setWumpusY(2);
 		Integer southCount = 0;
 		Integer northCount = 0;
 		Integer westCount = 0;
 		Integer eastCount = 0;
 		Integer restCount = 0;
-		for (int i = 0; i < 1000; i++){
-			boundedMap.moveWumpus();
-			if (boundedMap.getWumpusX() == 1 && boundedMap.getWumpusY() == 2)
+		for (int i = 0; i < 5000; i++){
+			gameMap.moveWumpus();
+			if (gameMap.getWumpusX() == 1 && gameMap.getWumpusY() == 2)
 				westCount++;
+			if (gameMap.getWumpusX() == 3 && gameMap.getWumpusY() == 2)
+				eastCount++;
+			if (gameMap.getWumpusX() == 2 && gameMap.getWumpusY() == 1)
+				southCount++;
+			if (gameMap.getWumpusX() == 2 && gameMap.getWumpusY() == 3)
+				northCount++;
+			if (gameMap.getWumpusX() == 2 && gameMap.getWumpusY() == 2)
+				restCount++;
+			gameMap.setWumpusX(2);
+			gameMap.setWumpusY(2);
+		}
+		assertEquals(true, southCount > 750);
+		assertEquals(true, northCount > 750);
+		assertEquals(true, eastCount > 750);
+		assertEquals(true, westCount > 750);
+		assertEquals(true, restCount > 750);
+	}
+	
+	@Test
+	public void testWumpusCannotMoveToBoundary(){
+		WumpusMap boundedMap = new WumpusMap(5,5);
+		boundedMap.setWumpusX(2);
+		boundedMap.setWumpusY(2);
+		boundedMap.setBoundaryCavern(3, 2);
+		Integer eastCount = 0;
+		for (int i = 0; i < 5000; i++){
+			boundedMap.moveWumpus();
 			if (boundedMap.getWumpusX() == 3 && boundedMap.getWumpusY() == 2)
 				eastCount++;
-			if (boundedMap.getWumpusX() == 2 && boundedMap.getWumpusY() == 1)
-				southCount++;
-			if (boundedMap.getWumpusX() == 2 && boundedMap.getWumpusY() == 3)
-				northCount++;
-			if (boundedMap.getWumpusX() == 2 && boundedMap.getWumpusY() == 2)
-				restCount++;
 			boundedMap.setWumpusX(2);
 			boundedMap.setWumpusY(2);
 		}
+		assertEquals(0, eastCount - 0);
 	}
-	
-	
 }
