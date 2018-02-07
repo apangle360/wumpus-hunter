@@ -122,7 +122,17 @@ public class MapTest {
 		WumpusMap gameMap = new WumpusMap(5,5);
 		gameMap.setPlayerXY(2, 2);
 		gameMap.setBoundaryCavern(3, 2);
+		try {gameMap.movePlayer('E');} catch (Exception ex) {
+		}
+		finally {assertEquals(2, 0 + gameMap.getPlayerX());}
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void testMoveErrorMessage() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		gameMap.setPlayerXY(2, 2);
+		gameMap.setBoundaryCavern(3, 2);
 		gameMap.movePlayer('E');
-		assertEquals(2, 0 + gameMap.getPlayerX());
+		
 	}
 }
