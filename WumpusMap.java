@@ -1,4 +1,4 @@
-package main;
+package WumpusHunter;
 
 import java.util.Random;
 
@@ -24,7 +24,7 @@ public class WumpusMap {
 		
 	}
 	
-	public WumpusMap generateWumpusTestMap() {
+	public static WumpusMap generateWumpusTestMap() {
 		WumpusMap testmap = new WumpusMap(5,5);
 		for(int i = 0; i < 5; i++ ) {
 			testmap.setBoundaryCavern(0, i);
@@ -33,10 +33,13 @@ public class WumpusMap {
 			testmap.setBoundaryCavern(4, i);
 		}
 		testmap.setCavernHasPit(testmap.caverns[2][2]);
+		testmap.setCavernHasBat(testmap.caverns[3][2]);
+		testmap.setCavernHasArrow(testmap.caverns[1][2]);
 		testmap.setWumpusXY(2, 2);
 		testmap.setPlayerXY(1, 1);
 		return testmap; 
 	}
+	
 	
 	public Integer getNumberOfCaverns(){
 		return numberOfCaverns;
@@ -150,8 +153,5 @@ public class WumpusMap {
 		return !(caverns[xPosition][yPosition].getIsBoundary());
 	}
 	
-	public boolean cavernHasPit(Integer cavernX, Integer cavernY){
-		return caverns[cavernX][cavernY].getHasPit();
-	}
 	
 }
