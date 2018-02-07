@@ -119,40 +119,36 @@ public class WumpusMap {
 		} while (!validateCavern(wumpusX, wumpusY));
 	}
 	
-	/*public void movePlayer(char movementOption){
+	public void movePlayer(char movementOption){
 			if (movementOption == 'E')
 				if(validateCavern(playerX + 1, playerY)) {
 					playerX = playerX + 1;
 				}
-			else throw error(E); 
+			else throw new RuntimeException("You can not go East from here."); 
+			
 			if (movementOption == 'W')
 				if(validateCavern(playerX - 1, playerY)) {
 					playerX = playerX - 1;
 				}
-			else throw error(W); 
+			else throw new RuntimeException("You can not go West from here.");  
 
 			if (movementOption == 'N')
 				if(validateCavern(playerX, playerY + 1)) {
 					playerY = playerY + 1;
 				}
-			else throw error(N);
+			else throw new RuntimeException("You can not go North from here."); 
 
 			if (movementOption == 'S')
 				if(validateCavern(playerX, playerY - 1)) {
 					playerY = playerY - 1;
 				}
-			else throw error(S); 
+			else throw new RuntimeException("You can not go South from here.");  
 
-	}*/
+	}
 	
 	private boolean validateCavern(Integer xPosition, Integer yPosition){
 		return !(caverns[xPosition][yPosition].getIsBoundary());
 	}
 	
-	/*private String error(char option) {
-		String error;
-		
-		return error;
-	}*/
 	
 }
