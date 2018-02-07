@@ -1,4 +1,4 @@
-package WumpusHunter;
+package main;
 
 import java.util.Random;
 
@@ -35,6 +35,7 @@ public class WumpusMap {
 		testmap.setCavernHasPit(testmap.caverns[2][2]);
 		testmap.setCavernHasBat(testmap.caverns[3][2]);
 		testmap.setCavernHasArrow(testmap.caverns[1][2]);
+		testmap.setCavernHasWumpus(testmap.caverns[2][2]);
 		testmap.setWumpusXY(2, 2);
 		testmap.setPlayerXY(1, 1);
 		return testmap; 
@@ -63,6 +64,10 @@ public class WumpusMap {
 	
 	public void setCavernHasArrow(Cavern cavern){
 		cavern.setHasArrow(true);
+	}
+	
+	public void setCavernHasWumpus(Cavern cavern){
+		cavern.setHasWumpus(true);
 	}
 	
 	public void setWumpusX(Integer wumpusX){

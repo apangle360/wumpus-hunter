@@ -5,6 +5,7 @@ public class Cavern {
 	private boolean hasArrow;
 	private boolean hasPit;
 	private boolean isBoundary = false;
+	private boolean hasWumpus;
 	
 	public Cavern(){
 		
@@ -40,5 +41,13 @@ public class Cavern {
 	
 	public void setIsBoundary(boolean isBoundary){
 		this.isBoundary = isBoundary;
+	}
+	
+	public boolean getHasWumpus(){
+		return hasWumpus;
+	}
+	
+	public void setHasWumpus(boolean hasWumpus){
+		this.hasWumpus = hasWumpus;
 	}
 }
