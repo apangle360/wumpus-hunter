@@ -1,4 +1,4 @@
-package WumpusHunter;
+package main;
 
 import java.util.Random;
 
@@ -150,5 +150,8 @@ public class WumpusMap {
 		return !(caverns[xPosition][yPosition].getIsBoundary());
 	}
 	
+	public boolean cavernHasPit(Integer cavernX, Integer cavernY){
+		return caverns[cavernX][cavernY].getHasPit();
+	}
 	
 }
