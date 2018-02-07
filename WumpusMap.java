@@ -1,12 +1,14 @@
 package main;
 
+import java.util.Random;
+
 public class WumpusMap {
 	private Integer numberOfCaverns = 0;
 	private Cavern[][] caverns;
 	private Integer playerX;
 	private Integer playerY;
-	private Integer WumpusX;
-	private Integer WumpusY; 
+	private Integer wumpusX;
+	private Integer wumpusY;
 	
 	public WumpusMap(Integer xSize, Integer ySize){
 		this.playerX = 0;
@@ -46,4 +48,54 @@ public class WumpusMap {
 		cavern.setHasArrow(true);
 	}
 	
+	public void setWumpusX(Integer wumpusX){
+		this.wumpusX = wumpusX;
+	}
+	
+	public void setWumpusY(Integer wumpusY){
+		this.wumpusY = wumpusY;
+	}
+	
+	public Integer getWumpusX(){
+		return wumpusX;
+	}
+	
+	public Integer getWumpusY(){
+		return wumpusY;
+	}
+	
+	public Integer getPlayerX(){
+		return playerX;
+	}
+	
+	public Integer getPlayerY(){
+		return playerY;
+	}
+	
+	public void setPlayerX(Integer playerX){
+		this.playerX = playerX;
+	}
+	
+	public void setPlayerY(Integer playerY){
+		this.playerY = playerY;
+	}
+	
+	public void moveWumpus(){
+		Random randomGenerator = new Random();
+		do{
+			Integer movementOption = (int) randomGenerator.nextInt(5);
+			if (movementOption == 1)
+				wumpusX = wumpusX + 1;
+			if (movementOption == 2)
+				wumpusX = wumpusX - 1;
+			if (movementOption == 3)
+				wumpusY = wumpusY + 1;
+			if (movementOption == 4)
+				wumpusY = wumpusY - 1;
+		} while (!validateCavern(wumpusX, wumpusY));
+	}
+	
+	private boolean validateCavern(Integer xPosition, Integer yPosition){
+		return !(caverns[xPosition][yPosition].getIsBoundary());
+	}
 }
