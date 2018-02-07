@@ -1,4 +1,4 @@
-package main;
+package WumpusHunter;
 
 import java.util.Random;
 
@@ -56,6 +56,11 @@ public class WumpusMap {
 		this.wumpusY = wumpusY;
 	}
 	
+	public void setWumpusXY(Integer wumpusX, Integer wumpusY) {
+		setWumpusY(wumpusY);
+		setWumpusX(wumpusX);
+	}
+	
 	public Integer getWumpusX(){
 		return wumpusX;
 	}
@@ -80,6 +85,11 @@ public class WumpusMap {
 		this.playerY = playerY;
 	}
 	
+	public void setPlayerXY(Integer playerX, Integer playerY) {
+		setPlayerY(playerY);
+		setPlayerX(playerX);
+	}
+	
 	public void moveWumpus(){
 		Random randomGenerator = new Random();
 		do{
@@ -95,7 +105,34 @@ public class WumpusMap {
 		} while (!validateCavern(wumpusX, wumpusY));
 	}
 	
+	public void movePlayer(char movementOption){
+			if (movementOption == 'E')
+				if(validateCavern(playerX + 1, playerY)) {
+					playerX = playerX + 1;
+				}
+				//else throw error 
+			if (movementOption == 'W')
+				if(validateCavern(playerX - 1, playerY)) {
+					playerX = playerX - 1;
+				}
+			//else throw error 
+
+			if (movementOption == 'N')
+				if(validateCavern(playerX, playerY + 1)) {
+					playerY = playerY + 1;
+				}
+			//else throw error 
+
+			if (movementOption == 'S')
+				if(validateCavern(playerX, playerY - 1)) {
+					playerY = playerY - 1;
+				}
+			//else throw error 
+
+	}
+	
 	private boolean validateCavern(Integer xPosition, Integer yPosition){
 		return !(caverns[xPosition][yPosition].getIsBoundary());
 	}
+	
 }
