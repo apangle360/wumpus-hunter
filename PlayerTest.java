@@ -1,4 +1,4 @@
-package Test;
+package WumpusHunter;
 
 import static org.junit.Assert.*;
 import junit.framework.Assert;
