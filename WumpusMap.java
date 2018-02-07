@@ -9,6 +9,7 @@ public class WumpusMap {
 	private Integer playerY;
 	private Integer wumpusX;
 	private Integer wumpusY;
+	private Integer playerArrows;
 	
 	public WumpusMap(Integer xSize, Integer ySize){
 		this.playerX = 0;
@@ -125,37 +126,38 @@ public class WumpusMap {
 			if (movementOption == 4)
 				wumpusY = wumpusY - 1;
 		} while (!validateCavern(wumpusX, wumpusY));
+		
 	}
 	
-	public void movePlayer(char movementOption){
-			if (movementOption == 'E')
+	public String movePlayer(char movementOption){
+			if (movementOption == 'E'){
 				if(validateCavern(playerX + 1, playerY)) {
-					playerX = playerX + 1;
+					this.playerX = this.playerX + 1;
 				}
-			else ActionAlert("You can not go East from here."); 
-			
-			if (movementOption == 'W')
+			else return ("You cannot go East from here."); 
+			}
+			if (movementOption == 'W'){
 				if(validateCavern(playerX - 1, playerY)) {
-					playerX = playerX - 1;
+					this.playerX = this.playerX - 1;
 				}
-			else ActionAlert("You can not go West from here.");  
-
-			if (movementOption == 'N')
+			else return ("You cannot go West from here.");  
+			}
+			if (movementOption == 'N'){
 				if(validateCavern(playerX, playerY + 1)) {
-					playerY = playerY + 1;
+					this.playerY = this.playerY + 1;
 				}
-			else ActionAlert("You can not go North from here."); 
-
-			if (movementOption == 'S')
+			else return ("You cannot go North from here."); 
+			}
+			if (movementOption == 'S'){
 				if(validateCavern(playerX, playerY - 1)) {
-					playerY = playerY - 1;
+					this.playerY = this.playerY - 1;
 				}
-			else ActionAlert("You can not go South from here.");  
-
-	}
-	
-	public String ActionAlert(String string) {
-		return string;
+			else return "You cannot go South from here.";  
+			}
+			if (movementOption == 'R'){
+				  
+			}
+			return "Movement successful";
 	}
 	
 	private boolean validateCavern(Integer xPosition, Integer yPosition){

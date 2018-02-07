@@ -8,34 +8,37 @@ public class PlayerMovement {
 	private int playerX;
 	private int playerY;
 	private char direction;
+	private String movementResult = "movement";
 	
 	public int getPlayerX() {
 		return playerX;
 	}
 	public void setPlayerX(int playerX) {
-		this.playerX = playerX;
+		testMap.setPlayerX(playerX);
 	}
-	public int getPlayerY() {
-		return playerY;
-	}
+
 	public void setPlayerY(int playerY) {
-		this.playerY = playerY;
-	}
+		testMap.setPlayerY(playerY);
+	} 
 	
 	public void setDirection(char direction) {
 		this.direction = direction;
 	}
 	
 	public int posX(){
-		testMap.movePlayer(direction);
+		movementResult = testMap.movePlayer(direction);
 		playerX = testMap.getPlayerX();
 		return playerX;
 	}
 	
 	public int posY(){
-		testMap.movePlayer(direction);
 		playerY = testMap.getPlayerY();
 		return playerY;
 	}
+	
+	public String errorMessageResult(){
+		return movementResult;
+	}
+	
 	
 }
