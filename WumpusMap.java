@@ -24,6 +24,19 @@ public class WumpusMap {
 		
 	}
 	
+	public WumpusMap generateWumpusTestMap() {
+		WumpusMap testmap = new WumpusMap(5,5);
+		for(int i = 0; i < 5; i++ ) {
+			testmap.setBoundaryCavern(0, i);
+			testmap.setBoundaryCavern(i, 0);
+			testmap.setBoundaryCavern(i, 4);
+			testmap.setBoundaryCavern(4, i);
+		}
+		testmap.setBoundaryCavern(2, 2);
+		testmap.setWumpusXY(2, 2);
+		return testmap; 
+	}
+	
 	public Integer getNumberOfCaverns(){
 		return numberOfCaverns;
 	}
@@ -105,34 +118,36 @@ public class WumpusMap {
 		} while (!validateCavern(wumpusX, wumpusY));
 	}
 	
-	public void movePlayer(char movementOption){
+	/*public void movePlayer(char movementOption){
 			if (movementOption == 'E')
 				if(validateCavern(playerX + 1, playerY)) {
 					playerX = playerX + 1;
 				}
-				//else throw error 
+			else throw error(E); 
 			if (movementOption == 'W')
 				if(validateCavern(playerX - 1, playerY)) {
 					playerX = playerX - 1;
 				}
-			//else throw error 
+			else throw error(W); 
 
 			if (movementOption == 'N')
 				if(validateCavern(playerX, playerY + 1)) {
 					playerY = playerY + 1;
 				}
-			//else throw error 
+			else throw error(N);
 
 			if (movementOption == 'S')
 				if(validateCavern(playerX, playerY - 1)) {
 					playerY = playerY - 1;
 				}
-			//else throw error 
+			else throw error(S); 
 
-	}
+	}*/
 	
 	private boolean validateCavern(Integer xPosition, Integer yPosition){
 		return !(caverns[xPosition][yPosition].getIsBoundary());
 	}
+	
+	//private String error()
 	
 }
