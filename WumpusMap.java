@@ -32,8 +32,9 @@ public class WumpusMap {
 			testmap.setBoundaryCavern(i, 4);
 			testmap.setBoundaryCavern(4, i);
 		}
-		testmap.setBoundaryCavern(2, 2);
+		testmap.setCavernHasPit(testmap.caverns[2][2]);
 		testmap.setWumpusXY(2, 2);
+		testmap.setPlayerXY(1, 1);
 		return testmap; 
 	}
 	
@@ -148,6 +149,10 @@ public class WumpusMap {
 		return !(caverns[xPosition][yPosition].getIsBoundary());
 	}
 	
-	//private String error()
+	/*private String error(char option) {
+		String error;
+		
+		return error;
+	}*/
 	
 }
