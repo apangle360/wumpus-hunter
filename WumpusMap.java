@@ -6,7 +6,7 @@ public class WumpusMap {
 	private Integer playerX;
 	private Integer playerY;
 	private Integer WumpusX;
-	private Integer WumpusY; 
+	private Integer WumpusY;
 	
 	public WumpusMap(Integer xSize, Integer ySize){
 		this.playerX = 0;
@@ -44,6 +44,10 @@ public class WumpusMap {
 	
 	public void setCavernHasArrow(Cavern cavern){
 		cavern.setHasArrow(true);
+	}
+	
+	public void setPlayerX(Integer playerX){
+		this.playerX = playerX;
 	}
 	
 }
