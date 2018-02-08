@@ -13,7 +13,6 @@ public class WumpusMap {
 	private Integer playerArrows;
 	private Integer finalArrowX;
 	private Integer finalArrowY;
-	private Integer numberOfBoundaryCaverns = 0;
 	
 	public WumpusMap(Integer xSize, Integer ySize){
 		this.player = new Player(1, 1);
@@ -40,7 +39,7 @@ public class WumpusMap {
 		testmap.setCavernHasBat(testmap.caverns[3][2]);
 		testmap.setCavernHasArrow(testmap.caverns[1][2]);
 		testmap.setCavernHasWumpus(testmap.caverns[2][2]);
-		testmap.setPlayerArrows(4);
+		testmap.setPlayerArrows(5);
 		testmap.setWumpusXY(2, 2);
 		testmap.getPlayer().setPlayerPos(1, 1);
 		return testmap; 
@@ -57,11 +56,6 @@ public class WumpusMap {
 	
 	public void setBoundaryCavern(int boundaryX, int boundaryY){
 		caverns[boundaryX][boundaryY].setIsBoundary(true);
-		numberOfBoundaryCaverns++;
-	}
-	
-	public Integer getNumberOfInhabitableCaverns(){
-		return numberOfCaverns - numberOfBoundaryCaverns; 
 	}
 	
 	public void setCavernHasPit(Cavern cavern){
@@ -135,10 +129,9 @@ public class WumpusMap {
 	}
 	
 	public String playerShootArrow(char shotDirection) {
-		String alertMessage = "You shoot an arrow."; 
+		String alertMessage = "Error message not assigned!"; 
 		if (playerArrows <= 0) {
-			alertMessage = "You are out of arrows!";
-			System.out.println(alertMessage);
+			alertMessage = "Out of arrows!";
 			return alertMessage;
 		}
 		if (shotDirection == 'E') {
@@ -173,7 +166,7 @@ public class WumpusMap {
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
 			playerArrows -= 1; 
 		}
-		System.out.println(alertMessage);
+		
 		return alertMessage;
 }
 	
@@ -242,14 +235,13 @@ public class WumpusMap {
 	}
 	
 	public boolean batsAreAdjacent(){
-		boolean batFound = false;
 		for (Cavern cavern : getAdjacentCaverns()){
 			if (cavern.getHasBat()){
 				System.out.println("You hear the chirping of bats.");
-				batFound = true;
+				return true;
 			}
 		}
-		return batFound;
+		return false;
 	}
 	
 	public boolean pitIsAdjacent(){
@@ -271,13 +263,21 @@ public class WumpusMap {
 		return adjacentCaverns;
 	}
 	
-	public void arrowCheck(Integer xPosition, Integer yPosition) {
+	public void arrowCheck() {
 		Player player = getPlayer();
 		Cavern[][] caverns = getCaverns();
 		if (caverns[player.getPosX()][player.getPosY()].getHasArrow()) {
 			playerArrows += 1;
 		}
 		caverns[player.getPosX()][player.getPosY()].setHasArrow(false);
+	}
+	
+	public void batCheck() {
+		Player player = getPlayer();
+		Cavern[][] caverns = getCaverns();
+		if (caverns[player.getPosX()][player.getPosY()].getHasBat()) {
+			batWarp();
+		}
 	}
 	
 	public boolean isWumpusHitCheck(char direction) {
@@ -335,6 +335,7 @@ public class WumpusMap {
 			return true;
 		}
 		return false;
-}
+	}
+	
 	
 }
