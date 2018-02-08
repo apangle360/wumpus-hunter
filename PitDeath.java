@@ -3,27 +3,27 @@ package fixtures;
 import main.Player;
 import main.WumpusMap;
 
-public class ArrowDeath {
+public class PitDeath {
 	private WumpusMap wumpusMap = new WumpusMap(5,5);
 	private WumpusMap testMap = wumpusMap.generateWumpusTestMap();
-	private char shootDirection;
+	private char direction;
 	private Player player = testMap.getPlayer();
 	
 	public void setPlayerX(int playerX) {
 		player.setPosX(playerX);
-		testMap.setPlayerArrows(5);
 	}
 
 	public void setPlayerY(int playerY) {
 		player.setPosY(playerY);
 	} 
 	
-	public void setShootDirection(char shootDirection) {
-		this.shootDirection = shootDirection;
+	public void setDirection(char direction) {
+		this.direction = direction;
 	}
 	
 	public String status(){
-		testMap.playerShootArrow(shootDirection);
+		testMap.setWumpusXY(3, 3);
+		testMap.movePlayer(direction);
 		if(testMap.playerDeathCheck()) return "You died";
 		return "nope";
 	}
