@@ -197,5 +197,38 @@ public class MapTest {
 		testMap.getPlayer().setPlayerPos(1, 2);
 		testMap.arrowCheck(testMap.getPlayer().getPosX(), testMap.getPlayer().getPosY());
 		assertEquals(6, 0 + testMap.getPlayerArrows());	
-  }
+	}
+	
+	@Test
+	public void testWumpusHit_N() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.getPlayer().setPlayerPos(2, 2);
+		testMap.setWumpusXY(2, 3);
+		assertTrue(testMap.isWumpusHitCheck('N'));
+	}
+	@Test
+	public void testWumpusHit_S() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.getPlayer().setPlayerPos(2, 2);
+		testMap.setWumpusXY(2, 1);
+		assertTrue(testMap.isWumpusHitCheck('S'));
+	}
+	@Test
+	public void testWumpusHit_E() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.getPlayer().setPlayerPos(2, 2);
+		testMap.setWumpusXY(3, 2);
+		assertTrue(testMap.isWumpusHitCheck('E'));
+	}
+	@Test
+	public void testWumpusHit_W() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.getPlayer().setPlayerPos(2, 2);
+		testMap.setWumpusXY(1, 2);
+		assertTrue(testMap.isWumpusHitCheck('W'));
+	}
 }
