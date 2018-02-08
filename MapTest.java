@@ -2,6 +2,7 @@ package Test;
 
 import static org.junit.Assert.*;
 import main.Cavern;
+import main.Player;
 import main.WumpusMap;
 
 import org.junit.Test;
@@ -189,7 +190,7 @@ public class MapTest {
 		testMap.playerShootArrow('W');
 		Cavern[][] testCaverns= testMap.getCaverns();
 		assertTrue(testCaverns[1][1].getHasArrow());
-}
+	}
 	@Test
 	public void testArrowCheck() {
 		WumpusMap gameMap = new WumpusMap(5,5);
@@ -230,5 +231,52 @@ public class MapTest {
 		testMap.getPlayer().setPlayerPos(2, 2);
 		testMap.setWumpusXY(1, 2);
 		assertTrue(testMap.isWumpusHitCheck('W'));
-}
+	}
+	
+	@Test
+	public void testBatWarpMovementIsRandom(){
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.getPlayer().setPlayerPos(2, 2);
+		Integer pos1Count = 0;
+		Integer pos2Count = 0;
+		Integer pos3Count = 0;
+		Integer pos4Count = 0;
+		Integer pos5Count = 0;
+		Integer pos6Count = 0;
+		Integer pos7Count = 0;
+		Integer pos8Count = 0;
+		Integer pos9Count = 0;
+		for (int i = 0; i < 9000; i++){
+			testMap.batWarp();
+			if (testMap.getPlayer().getPosX() == 1 && testMap.getPlayer().getPosY() == 1)
+				pos1Count++;
+			if (testMap.getPlayer().getPosX() == 1 && testMap.getPlayer().getPosY() == 2)
+				pos2Count++;
+			if (testMap.getPlayer().getPosX() == 1 && testMap.getPlayer().getPosY() == 3)
+				pos3Count++;
+			if (testMap.getPlayer().getPosX() == 2 && testMap.getPlayer().getPosY() == 1)
+				pos4Count++;
+			if (testMap.getPlayer().getPosX() == 2 && testMap.getPlayer().getPosY() == 2)
+				pos5Count++;
+			if (testMap.getPlayer().getPosX() == 2 && testMap.getPlayer().getPosY() == 3)
+				pos6Count++;
+			if (testMap.getPlayer().getPosX() == 3 && testMap.getPlayer().getPosY() == 1)
+				pos7Count++;
+			if (testMap.getPlayer().getPosX() == 3 && testMap.getPlayer().getPosY() == 2)
+				pos8Count++;
+			if (testMap.getPlayer().getPosX() == 3 && testMap.getPlayer().getPosY() == 3)
+				pos9Count++;
+			testMap.getPlayer().setPlayerPos(2, 2);
+		}
+		assertEquals(true, pos1Count > 750);
+		assertEquals(true, pos2Count > 750);
+		assertEquals(true, pos3Count > 750);
+		assertEquals(true, pos4Count > 750);
+		assertEquals(true, pos5Count > 750);
+		assertEquals(true, pos6Count > 750);
+		assertEquals(true, pos7Count > 750);
+		assertEquals(true, pos8Count > 750);
+		assertEquals(true, pos9Count > 750);
+	}
 }
