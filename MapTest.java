@@ -1,10 +1,10 @@
-package Test;
+package main;
 
 import static org.junit.Assert.*;
-import main.Cavern;
-import main.WumpusMap;
 
 import org.junit.Test;
+
+import main.WumpusMap;
 
 public class MapTest {
 
@@ -129,6 +129,43 @@ public class MapTest {
 	}
 	
 	@Test
+	public void testPlayerShootArrow_N() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.setPlayerXY(2, 1);
+		testMap.playerShootArrow('N');
+		Cavern[][] testCaverns= testMap.getCaverns();
+		assertTrue(testCaverns[2][3].getHasArrow());
+	}
+	@Test
+	public void testPlayerShootArrow_S() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.setPlayerXY(2, 1);
+		testMap.playerShootArrow('S');
+		Cavern[][] testCaverns= testMap.getCaverns();
+		assertTrue(testCaverns[2][1].getHasArrow());
+	}
+	@Test
+	public void testPlayerShootArrow_E() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.setPlayerXY(2, 1);
+		testMap.playerShootArrow('E');
+		Cavern[][] testCaverns= testMap.getCaverns();
+		assertTrue(testCaverns[3][1].getHasArrow());
+	}
+	@Test
+	public void testPlayerShootArrow_W() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.setPlayerXY(2, 1);
+		testMap.playerShootArrow('W');
+		Cavern[][] testCaverns= testMap.getCaverns();
+		assertTrue(testCaverns[1][1].getHasArrow());
+	}
+	
+	@Test
 	public void testHazardsDetected(){
 		WumpusMap gameMap = new WumpusMap(5,5);
 		gameMap.setPlayerXY(2, 2);
@@ -153,4 +190,6 @@ public class MapTest {
 		assertEquals(false, gameMap.batsAreAdjacent());
 		assertEquals(false, gameMap.pitIsAdjacent());
 	}
+	
+	
 }
