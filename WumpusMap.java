@@ -277,20 +277,25 @@ public class WumpusMap {
 		Player player = getPlayer();
 		if (direction == 'E') {
 			if (getWumpusY() == player.getPosY() && getWumpusX() > player.getPosX())
+				System.out.println("Wumpus Hit! You have slain the monster");
 				return true;
 		}
 		if (direction == 'W') {
 			if (getWumpusY() == player.getPosY() && getWumpusX() < player.getPosX())
+				System.out.println("Wumpus Hit! You have slain the monster");
 				return true; 
 		}
 		if (direction == 'N') {
 			if (getWumpusX() == player.getPosX() && getWumpusY() > player.getPosY())
+				System.out.println("Wumpus Hit! You have slain the monster");
 				return true; 
 		}
 		if (direction == 'S') {
 			if (getWumpusX() == player.getPosX() && getWumpusY() < player.getPosY())
+				System.out.println("Wumpus Hit! You have slain the monster");
 				return true; 
 		}
+		System.out.println("You hear a dull thud in the distance...");
 		return false;
 	}
 	
@@ -304,6 +309,25 @@ public class WumpusMap {
 			player.setPlayerPos(movementOptionX, movementOptionY);
 		} while (!validateCavern(player.getPosX(), player.getPosY()));
 		getPlayer().setPlayerPos(player.getPosX(), player.getPosY());
+		System.out.println("Bats fly you to an different location!");
+	}
+	
+	public boolean playerDeathCheck() {
+		Player player = getPlayer();
+		Cavern[][] cavern = getCaverns();
+		if(getWumpusX() == player.getPosX() && getWumpusY() == player.getPosY()) {
+			System.out.println("The Wumpus has found you!");
+			return true;
+		}
+		if(cavern[player.getPosX()][player.getPosY()].getHasPit()) {
+			System.out.println("You walked into a pit! How unfortunate!");
+			return true;
+		}
+		if(cavern[player.getPosX()][player.getPosY()].getHasArrow()) {
+			System.out.println("You shot yourself!  Good aim.");
+			return true;
+		}
+		return false;
 	}
 	
 	
