@@ -269,6 +269,7 @@ public class WumpusMap {
 		if (caverns[player.getPosX()][player.getPosY()].getHasArrow()) {
 			playerArrows += 1;
 		}
+		caverns[player.getPosX()][player.getPosY()].setHasArrow(false);
 	}
 	
 	public boolean isWumpusHitCheck(char direction) {
