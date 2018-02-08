@@ -21,6 +21,10 @@ public class CanPlayerCollectArrow {
 		testMap.getPlayer().setPosY(playerY);
 	}
 	
+	public void setArrowCountBefore(Integer arrows){
+		testMap.setPlayerArrows(arrows);
+	}
+	
 	public void setDirection(char direction){
 		this.direction = direction;
 		if (direction == 'N'){
@@ -51,15 +55,15 @@ public class CanPlayerCollectArrow {
 		testMap.movePlayer(direction);
 		playerX = testMap.getPlayer().getPosX();
 		playerY = testMap.getPlayer().getPosY();
-		testMap.arrowCheck(endCavernX, endCavernY);
 	}
 	
-	public Integer arrowCount(){
+	public Integer arrowCountAfter(){
+		testMap.arrowCheck();
 		return testMap.getPlayerArrows();
 	}
 	
 	public boolean resultCavernHasArrows(){
-		return testMap.getCaverns()[endCavernX][endCavernY].getHasArrow();
+		return testMap.getCaverns()[playerX][playerY].getHasArrow();
 	}
 	
 }
