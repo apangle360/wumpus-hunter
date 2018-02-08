@@ -263,14 +263,12 @@ public class WumpusMap {
 		return adjacentCaverns;
 	}
 	
-	public String arrowCheck(Integer xPosition, Integer yPosition) {
-		String message = "";
+	public void arrowCheck(Integer xPosition, Integer yPosition) {
 		Player player = getPlayer();
-		if (player.getPosX() == xPosition && player.getPosY() == yPosition) {
+		Cavern[][] caverns = getCaverns();
+		if (caverns[player.getPosX()][player.getPosY()].getHasArrow()) {
 			playerArrows += 1;
-			message = "Found a lost arrow!";
 		}
-		return message;
 	}
 	
 	public boolean isWumpusHitCheck(char direction) {
