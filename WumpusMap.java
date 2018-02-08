@@ -13,6 +13,7 @@ public class WumpusMap {
 	private Integer playerArrows;
 	private Integer finalArrowX;
 	private Integer finalArrowY;
+	private Integer numberOfBoundaryCaverns = 0;
 	
 	public WumpusMap(Integer xSize, Integer ySize){
 		this.player = new Player(1, 1);
@@ -56,6 +57,11 @@ public class WumpusMap {
 	
 	public void setBoundaryCavern(int boundaryX, int boundaryY){
 		caverns[boundaryX][boundaryY].setIsBoundary(true);
+		numberOfBoundaryCaverns++;
+	}
+	
+	public Integer getNumberOfInhabitableCaverns(){
+		return numberOfCaverns - numberOfBoundaryCaverns; 
 	}
 	
 	public void setCavernHasPit(Cavern cavern){
@@ -235,13 +241,14 @@ public class WumpusMap {
 	}
 	
 	public boolean batsAreAdjacent(){
+		boolean batFound = false;
 		for (Cavern cavern : getAdjacentCaverns()){
 			if (cavern.getHasBat()){
 				System.out.println("You hear the chirping of bats.");
-				return true;
+				batFound = true;
 			}
 		}
-		return false;
+		return batFound;
 	}
 	
 	public boolean pitIsAdjacent(){
@@ -292,7 +299,6 @@ public class WumpusMap {
 				return true; 
 		}
 		return false;
-	}
-	
+}
 	
 }

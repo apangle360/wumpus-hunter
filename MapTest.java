@@ -189,7 +189,7 @@ public class MapTest {
 		testMap.playerShootArrow('W');
 		Cavern[][] testCaverns= testMap.getCaverns();
 		assertTrue(testCaverns[1][1].getHasArrow());
-	}
+}
 	@Test
 	public void testArrowCheck() {
 		WumpusMap gameMap = new WumpusMap(5,5);
@@ -230,5 +230,5 @@ public class MapTest {
 		testMap.getPlayer().setPlayerPos(2, 2);
 		testMap.setWumpusXY(1, 2);
 		assertTrue(testMap.isWumpusHitCheck('W'));
-	}
+}
 }
