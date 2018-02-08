@@ -7,8 +7,7 @@ import java.util.Random;
 public class WumpusMap {
 	private Integer numberOfCaverns = 0;
 	private Cavern[][] caverns;
-	private Integer playerX;
-	private Integer playerY;
+	private Player player;
 	private Integer wumpusX;
 	private Integer wumpusY;
 	private Integer playerArrows;
@@ -16,8 +15,7 @@ public class WumpusMap {
 	private Integer finalArrowY;
 	
 	public WumpusMap(Integer xSize, Integer ySize){
-		this.playerX = 0;
-		this.playerY = 0;
+		this.player = new Player(1, 1);
 		numberOfCaverns = 0;
 		caverns = new Cavern[xSize][ySize];
 		for (int xIndex = 0; xIndex < xSize; xIndex++){
@@ -43,7 +41,7 @@ public class WumpusMap {
 		testmap.setCavernHasWumpus(testmap.caverns[2][2]);
 		testmap.setPlayerArrows(5);
 		testmap.setWumpusXY(2, 2);
-		testmap.setPlayerXY(1, 1);
+		testmap.getPlayer().setPlayerPos(1, 1);
 		return testmap; 
 	}
 	
@@ -97,25 +95,8 @@ public class WumpusMap {
 		return wumpusY;
 	}
 	
-	public Integer getPlayerX(){
-		return playerX;
-	}
-	
-	public Integer getPlayerY(){
-		return playerY;
-	}
-	
-	public void setPlayerX(Integer playerX){
-		this.playerX = playerX;
-	}
-	
-	public void setPlayerY(Integer playerY){
-		this.playerY = playerY;
-	}
-	
-	public void setPlayerXY(Integer playerX, Integer playerY) {
-		setPlayerY(playerY);
-		setPlayerX(playerX);
+	public Player getPlayer(){
+		return this.player;
 	}
 	
 	public Integer getPlayerArrows() {
@@ -146,7 +127,49 @@ public class WumpusMap {
 		setFinalArrowX(finalArrowX);
 		setFinalArrowY(finalArrowY);
 	}
-
+	
+	public String playerShootArrow(char shotDirection) {
+		String alertMessage = "Error message not assigned!"; 
+		if (playerArrows <= 0) {
+			alertMessage = "Out of arrows!";
+			return alertMessage;
+		}
+		if (shotDirection == 'E') {
+			setFinalArrowXY(player.getPosX(), player.getPosY());
+			while(validateCavern(getFinalArrowX() + 1, getFinalArrowY())) {
+				setFinalArrowXY(getFinalArrowX() +1, getFinalArrowY());
+			}			
+			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
+			playerArrows -= 1; 
+		}
+		if (shotDirection == 'W') {
+			setFinalArrowXY(player.getPosX(), player.getPosY());
+			while(validateCavern(getFinalArrowX() - 1, getFinalArrowY())) {
+				setFinalArrowXY(getFinalArrowX() - 1, getFinalArrowY());
+			}			
+			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
+			playerArrows -= 1; 
+		}
+		if (shotDirection == 'N') {
+			setFinalArrowXY(player.getPosX(), player.getPosY());
+			while(validateCavern(getFinalArrowX(), getFinalArrowY() + 1)) {
+				setFinalArrowXY(getFinalArrowX(), getFinalArrowY() + 1);
+			}			
+			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
+			playerArrows -= 1; 
+		}
+		if (shotDirection == 'S') {
+			setFinalArrowXY(player.getPosX(), player.getPosY());
+			while(validateCavern(getFinalArrowX(), getFinalArrowY() - 1)) {
+				setFinalArrowXY(getFinalArrowX(), getFinalArrowY() - 1);
+			}			
+			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
+			playerArrows -= 1; 
+		}
+		
+		return alertMessage;
+}
+	
 	public void moveWumpus(){
 		Random randomGenerator = new Random();
 		do{
@@ -165,26 +188,26 @@ public class WumpusMap {
 	
 	public String movePlayer(char movementOption){
 			if (movementOption == 'E'){
-				if(validateCavern(playerX + 1, playerY)) {
-					this.playerX += 1;
+				if(validateCavern(player.getPosX() + 1, player.getPosY())) {
+					player.setPosX(player.getPosX() + 1);
 				}
 			else return ("You cannot go East from here."); 
 			}
 			if (movementOption == 'W'){
-				if(validateCavern(playerX - 1, playerY)) {
-					this.playerX -= 1;
+				if(validateCavern(player.getPosX() - 1, player.getPosY())) {
+					player.setPosX(player.getPosX() - 1);
 				}
 			else return ("You cannot go West from here.");  
 			}
 			if (movementOption == 'N'){
-				if(validateCavern(playerX, playerY + 1)) {
-					this.playerY += 1;
+				if(validateCavern(player.getPosX(), player.getPosY() + 1)) {
+					player.setPosY(player.getPosY() + 1);
 				}
 			else return ("You cannot go North from here."); 
 			}
 			if (movementOption == 'S'){
-				if(validateCavern(playerX, playerY - 1)) {
-					this.playerY -= 1;
+				if(validateCavern(player.getPosX(), player.getPosY() - 1)) {
+					player.setPosY(player.getPosY() - 1);
 				}
 			else return "You cannot go South from here.";  
 			}
@@ -194,58 +217,17 @@ public class WumpusMap {
 			return "Movement successful";
 	}
 	
-	public String playerShootArrow(char shotDirection) {
-		String alertMessage = "Error message not assigned!"; 
-		if (playerArrows <= 0) {
-			alertMessage = "Out of arrows!";
-			return alertMessage;
-		}
-		if (shotDirection == 'E') {
-			setFinalArrowXY(getPlayerX(), getPlayerY());
-			while(validateCavern(getFinalArrowX() + 1, getFinalArrowY())) {
-				setFinalArrowXY(getFinalArrowX() +1, getFinalArrowY());
-			}			
-			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
-			playerArrows -= 1; 
-		}
-		if (shotDirection == 'W') {
-			setFinalArrowXY(getPlayerX(), getPlayerY());
-			while(validateCavern(getFinalArrowX() - 1, getFinalArrowY())) {
-				setFinalArrowXY(getFinalArrowX() - 1, getFinalArrowY());
-			}			
-			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
-			playerArrows -= 1; 
-		}
-		if (shotDirection == 'N') {
-			setFinalArrowXY(getPlayerX(), getPlayerY());
-			while(validateCavern(getFinalArrowX(), getFinalArrowY() + 1)) {
-				setFinalArrowXY(getFinalArrowX(), getFinalArrowY() + 1);
-			}			
-			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
-			playerArrows -= 1; 
-		}
-		if (shotDirection == 'S') {
-			setFinalArrowXY(getPlayerX(), getPlayerY());
-			while(validateCavern(getFinalArrowX(), getFinalArrowY() - 1)) {
-				setFinalArrowXY(getFinalArrowX(), getFinalArrowY() - 1);
-			}			
-			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
-			playerArrows -= 1; 
-		}
-		
-		return alertMessage;
-	}
-	
 	private boolean validateCavern(Integer xPosition, Integer yPosition){
 		return !(caverns[xPosition][yPosition].getIsBoundary());
 	}
+
 	
 	public boolean wumpusIsAdjacent(){
-		if (Math.abs(wumpusX - playerX) == 1 && Math.abs(wumpusY - playerY) == 0){
+		if (Math.abs(wumpusX - player.getPosX()) == 1 && Math.abs(wumpusY - player.getPosY()) == 0){
 			System.out.println("You smell the Wumpus.");
 			return true;
 		}
-		if (Math.abs(wumpusX - playerX) == 0 && Math.abs(wumpusY - playerY) == 1){
+		if (Math.abs(wumpusX - player.getPosX()) == 0 && Math.abs(wumpusY - player.getPosY()) == 1){
 			System.out.println("You smell the Wumpus.");
 			return true;
 		}
@@ -274,10 +256,11 @@ public class WumpusMap {
 	
 	private List<Cavern> getAdjacentCaverns(){
 		List<Cavern> adjacentCaverns = new ArrayList<Cavern>();
-		adjacentCaverns.add(getCaverns()[playerX+1][playerY]);
-		adjacentCaverns.add(getCaverns()[playerX-1][playerY]);
-		adjacentCaverns.add(getCaverns()[playerX][playerY+1]);
-		adjacentCaverns.add(getCaverns()[playerX][playerY-1]);
+		adjacentCaverns.add(getCaverns()[player.getPosX()+1][player.getPosY()]);
+		adjacentCaverns.add(getCaverns()[player.getPosX()-1][player.getPosY()]);
+		adjacentCaverns.add(getCaverns()[player.getPosX()][player.getPosY()+1]);
+		adjacentCaverns.add(getCaverns()[player.getPosX()][player.getPosY()-1]);
 		return adjacentCaverns;
 	}
+	
 }
