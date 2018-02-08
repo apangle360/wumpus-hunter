@@ -220,7 +220,6 @@ public class WumpusMap {
 	private boolean validateCavern(Integer xPosition, Integer yPosition){
 		return !(caverns[xPosition][yPosition].getIsBoundary());
 	}
-
 	
 	public boolean wumpusIsAdjacent(){
 		if (Math.abs(wumpusX - player.getPosX()) == 1 && Math.abs(wumpusY - player.getPosY()) == 0){
@@ -262,8 +261,7 @@ public class WumpusMap {
 		adjacentCaverns.add(getCaverns()[player.getPosX()][player.getPosY()-1]);
 		return adjacentCaverns;
 	}
-	
-	public String arrowCheck(Integer xPosition, Integer yPosition) {
+  	public String arrowCheck(Integer xPosition, Integer yPosition) {
 		String message = "";
 		Player player = getPlayer();
 		if (player.getPosX() == xPosition && player.getPosY() == yPosition) {
@@ -272,6 +270,5 @@ public class WumpusMap {
 		}
 		return message;
 	}
-	
 	
 }

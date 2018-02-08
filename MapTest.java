@@ -197,5 +197,5 @@ public class MapTest {
 		testMap.getPlayer().setPlayerPos(1, 2);
 		testMap.arrowCheck(testMap.getPlayer().getPosX(), testMap.getPlayer().getPosY());
 		assertEquals(6, 0 + testMap.getPlayerArrows());	
-	}
+  }
 }
