@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class WumpusMap {
@@ -238,4 +240,44 @@ public class WumpusMap {
 		return !(caverns[xPosition][yPosition].getIsBoundary());
 	}
 	
+	public boolean wumpusIsAdjacent(){
+		if (Math.abs(wumpusX - playerX) == 1 && Math.abs(wumpusY - playerY) == 0){
+			System.out.println("You smell the Wumpus.");
+			return true;
+		}
+		if (Math.abs(wumpusX - playerX) == 0 && Math.abs(wumpusY - playerY) == 1){
+			System.out.println("You smell the Wumpus.");
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean batsAreAdjacent(){
+		for (Cavern cavern : getAdjacentCaverns()){
+			if (cavern.getHasBat()){
+				System.out.println("You hear the chirping of bats.");
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean pitIsAdjacent(){
+		for (Cavern cavern : getAdjacentCaverns()){
+			if (cavern.getHasPit()){
+				System.out.println("You hear wind.");
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private List<Cavern> getAdjacentCaverns(){
+		List<Cavern> adjacentCaverns = new ArrayList<Cavern>();
+		adjacentCaverns.add(getCaverns()[playerX+1][playerY]);
+		adjacentCaverns.add(getCaverns()[playerX-1][playerY]);
+		adjacentCaverns.add(getCaverns()[playerX][playerY+1]);
+		adjacentCaverns.add(getCaverns()[playerX][playerY-1]);
+		return adjacentCaverns;
+	}
 }
