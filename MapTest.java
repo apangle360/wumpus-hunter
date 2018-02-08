@@ -279,4 +279,31 @@ public class MapTest {
 		assertEquals(true, pos8Count > 750);
 		assertEquals(true, pos9Count > 750);
 	}
+	
+	@Test
+	public void testDeathCheck_Wumpus() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.getPlayer().setPlayerPos(3, 3);
+		testMap.setWumpusXY(3, 3);
+		assertTrue(testMap.playerDeathCheck());
+	}
+	
+	@Test
+	public void testDeathCheck_Pit() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		Cavern[][] caverns = testMap.getCaverns();
+		caverns[1][3].setHasPit(true);
+		testMap.getPlayer().setPlayerPos(1, 3);
+		assertTrue(testMap.playerDeathCheck());
+	}
+	
+	@Test
+	public void testDeathCheck_Arrow() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.getPlayer().setPlayerPos(1, 2);
+		assertTrue(testMap.playerDeathCheck());
+	}
 }
