@@ -1,5 +1,6 @@
 package fixtures;
 
+import main.Player;
 import main.WumpusMap;
 
 public class PlayerMovement {
@@ -9,16 +10,17 @@ public class PlayerMovement {
 	private int playerY;
 	private char direction;
 	private String movementResult = "movement";
+	private Player player = testMap.getPlayer();
 	
 	public int getPlayerX() {
 		return playerX;
 	}
 	public void setPlayerX(int playerX) {
-		testMap.setPlayerX(playerX);
+		player.setPosX(playerX);
 	}
 
 	public void setPlayerY(int playerY) {
-		testMap.setPlayerY(playerY);
+		player.setPosY(playerY);
 	} 
 	
 	public void setDirection(char direction) {
@@ -27,12 +29,12 @@ public class PlayerMovement {
 	
 	public int posX(){
 		movementResult = testMap.movePlayer(direction);
-		playerX = testMap.getPlayerX();
+		playerX = player.getPosX();
 		return playerX;
 	}
 	
 	public int posY(){
-		playerY = testMap.getPlayerY();
+		playerY = player.getPosY();
 		return playerY;
 	}
 	
