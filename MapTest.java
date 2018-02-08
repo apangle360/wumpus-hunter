@@ -1,6 +1,7 @@
 package Test;
 
 import static org.junit.Assert.*;
+import main.Cavern;
 import main.WumpusMap;
 
 import org.junit.Test;
@@ -127,5 +128,29 @@ public class MapTest {
 		assertEquals(2, 0 + gameMap.getPlayerX());
 	}
 	
+	@Test
+	public void testHazardsDetected(){
+		WumpusMap gameMap = new WumpusMap(5,5);
+		gameMap.setPlayerXY(2, 2);
+		gameMap.setWumpusXY(1, 2);
+		Cavern[][] caverns = gameMap.getCaverns();
+		gameMap.setCavernHasBat(caverns[3][2]);
+		gameMap.setCavernHasPit(caverns[2][3]);
+		assertEquals(true, gameMap.wumpusIsAdjacent());
+		assertEquals(true, gameMap.batsAreAdjacent());
+		assertEquals(true, gameMap.pitIsAdjacent());
+	}
 	
+	@Test
+	public void testNoFalseHazardsDetected(){
+		WumpusMap gameMap = new WumpusMap(5,5);
+		gameMap.setPlayerXY(2, 2);
+		gameMap.setWumpusXY(3, 3);
+		Cavern[][] caverns = gameMap.getCaverns();
+		gameMap.setCavernHasBat(caverns[1][1]);
+		gameMap.setCavernHasPit(caverns[1][3]);
+		assertEquals(false, gameMap.wumpusIsAdjacent());
+		assertEquals(false, gameMap.batsAreAdjacent());
+		assertEquals(false, gameMap.pitIsAdjacent());
+	}
 }
