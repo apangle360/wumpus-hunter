@@ -1,7 +1,7 @@
-package WumpusHunter;
+package Test;
 
 import static org.junit.Assert.*;
-import WumpusHunter.WumpusMap;
+import main.WumpusMap;
 
 import org.junit.Test;
 
@@ -85,12 +85,13 @@ public class MapTest {
 		assertEquals(0, eastCount - 0);
 	}
 	
+	
 	@Test
 	public void testPlayerMove_N() {
 		WumpusMap gameMap = new WumpusMap(5,5);
-		gameMap.setPlayerXY(2, 2);
+		gameMap.setPlayerXY(2, 1);
 		gameMap.movePlayer('N');
-		assertEquals(3, 0 + gameMap.getPlayerY());
+		assertEquals(2, 0 + gameMap.getPlayerY());
 	}
 	
 	@Test
@@ -122,17 +123,9 @@ public class MapTest {
 		WumpusMap gameMap = new WumpusMap(5,5);
 		gameMap.setPlayerXY(2, 2);
 		gameMap.setBoundaryCavern(3, 2);
-		try {gameMap.movePlayer('E');} catch (Exception ex) {
-		}
-		finally {assertEquals(2, 0 + gameMap.getPlayerX());}
+		gameMap.movePlayer('E');
+		assertEquals(2, 0 + gameMap.getPlayerX());
 	}
 	
-	@Test(expected = RuntimeException.class)
-	public void testMoveErrorMessage() {
-		WumpusMap gameMap = new WumpusMap(5,5);
-		gameMap.setPlayerXY(2, 2);
-		gameMap.setBoundaryCavern(3, 2);
-		gameMap.movePlayer('E');
-		
-	}
+	
 }
