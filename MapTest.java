@@ -189,5 +189,13 @@ public class MapTest {
 		testMap.playerShootArrow('W');
 		Cavern[][] testCaverns= testMap.getCaverns();
 		assertTrue(testCaverns[1][1].getHasArrow());
-}
+	}
+	@Test
+	public void testArrowCheck() {
+		WumpusMap gameMap = new WumpusMap(5,5);
+		WumpusMap testMap = gameMap.generateWumpusTestMap();
+		testMap.getPlayer().setPlayerPos(1, 2);
+		testMap.arrowCheck(testMap.getPlayer().getPosX(), testMap.getPlayer().getPosY());
+		assertEquals(6, 0 + testMap.getPlayerArrows());	
+  }
 }
