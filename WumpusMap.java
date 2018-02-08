@@ -13,6 +13,7 @@ public class WumpusMap {
 	private Integer playerArrows;
 	private Integer finalArrowX;
 	private Integer finalArrowY;
+	private Integer numberOfBoundaryCaverns = 0;
 	
 	public WumpusMap(Integer xSize, Integer ySize){
 		this.player = new Player(1, 1);
@@ -39,7 +40,7 @@ public class WumpusMap {
 		testmap.setCavernHasBat(testmap.caverns[3][2]);
 		testmap.setCavernHasArrow(testmap.caverns[1][2]);
 		testmap.setCavernHasWumpus(testmap.caverns[2][2]);
-		testmap.setPlayerArrows(5);
+		testmap.setPlayerArrows(4);
 		testmap.setWumpusXY(2, 2);
 		testmap.getPlayer().setPlayerPos(1, 1);
 		return testmap; 
@@ -56,6 +57,11 @@ public class WumpusMap {
 	
 	public void setBoundaryCavern(int boundaryX, int boundaryY){
 		caverns[boundaryX][boundaryY].setIsBoundary(true);
+		numberOfBoundaryCaverns++;
+	}
+	
+	public Integer getNumberOfInhabitableCaverns(){
+		return numberOfCaverns - numberOfBoundaryCaverns; 
 	}
 	
 	public void setCavernHasPit(Cavern cavern){
@@ -129,9 +135,10 @@ public class WumpusMap {
 	}
 	
 	public String playerShootArrow(char shotDirection) {
-		String alertMessage = "Error message not assigned!"; 
+		String alertMessage = "You shoot an arrow."; 
 		if (playerArrows <= 0) {
-			alertMessage = "Out of arrows!";
+			alertMessage = "You are out of arrows!";
+			System.out.println(alertMessage);
 			return alertMessage;
 		}
 		if (shotDirection == 'E') {
@@ -166,7 +173,7 @@ public class WumpusMap {
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
 			playerArrows -= 1; 
 		}
-		
+		System.out.println(alertMessage);
 		return alertMessage;
 }
 	
@@ -235,13 +242,14 @@ public class WumpusMap {
 	}
 	
 	public boolean batsAreAdjacent(){
+		boolean batFound = false;
 		for (Cavern cavern : getAdjacentCaverns()){
 			if (cavern.getHasBat()){
 				System.out.println("You hear the chirping of bats.");
-				return true;
+				batFound = true;
 			}
 		}
-		return false;
+		return batFound;
 	}
 	
 	public boolean pitIsAdjacent(){
@@ -327,7 +335,6 @@ public class WumpusMap {
 			return true;
 		}
 		return false;
-	}
-	
+}
 	
 }

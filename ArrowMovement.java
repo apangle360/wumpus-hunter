@@ -1,34 +1,41 @@
 package fixtures;
 
-import main.Cavern;
+import main.Player;
 import main.WumpusMap;
 
 public class ArrowMovement {
 	private WumpusMap wumpusMap = new WumpusMap(5,5);
 	private WumpusMap testMap = wumpusMap.generateWumpusTestMap();
-	private Integer playerX;
-	private Integer playerY;
+	private int playerX;
+	private int playerY;
 	private char direction;
+	private Player player = testMap.getPlayer();
+	private int arrowX;
+	private int arrowY;
+	
+	public int getPlayerX() {
+		return playerX;
+	}
+	public void setPlayerX(int playerX) {
+		player.setPosX(playerX);
+	}
+
+	public void setPlayerY(int playerY) {
+		player.setPosY(playerY);
+	} 
 	
 	public void setDirection(char direction) {
 		this.direction = direction;
 	}
-	public void setPlayerX(Integer playerX) {
-		this.playerX = playerX;
-	}
-	public void setPlayerY(Integer playerY) {
-		this.playerY = playerY;
-	}
+	
 	public int arrowX(){
 		testMap.playerShootArrow(direction);
-		int arrowX = testMap.getFinalArrowX();
-		return arrowX;
+		return testMap.getFinalArrowX();
 	}
 	
 	public int arrowY(){
-		int arrowY = testMap.getFinalArrowY();
-		return arrowY;
+		playerY = player.getPosY();
+		return testMap.getFinalArrowY();
 	}
 	
-
 }
