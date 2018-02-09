@@ -16,6 +16,12 @@ public class HuntTheWumpus2TheReckoning {
 		gameMap.setPlayerArrows(5);
 		gameMap.setWumpusXY(2, 2);
 		gameMap.getPlayer().setPlayerPos(1, 1);
+		
+		System.out.println();
+		System.out.println();
+		
+		
+		
 		for(int i = 0; i < 5; i++ ) {
 			gameMap.setBoundaryCavern(0, i);
 			gameMap.setBoundaryCavern(i, 0);
@@ -23,8 +29,13 @@ public class HuntTheWumpus2TheReckoning {
 			gameMap.setBoundaryCavern(4, i);
 		}
 		
-		while (!gameMap.getGameOver())
+		
+		
+		
+		while (!gameMap.getGameOver()){
+			
 			gameMap.playerTurn();
+		}
 		System.out.println("Play again?");
 		Scanner reader = new Scanner(System.in);
 		System.out.println("Press Y to Play Again.");

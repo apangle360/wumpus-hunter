@@ -33,6 +33,21 @@ public class WumpusMap {
 	}
 	
 	public void playerTurn(){
+		
+		for(int i = 4; i >= 0; i-- ) {
+			for(int j = 0; j < 5; j++ ) {
+				if (getCaverns()[i][j].getIsBoundary()){
+					System.out.print(" X ");
+				}else if (getPlayer().getPosX() == j && getPlayer().getPosY() == i){
+					System.out.print(" O ");
+				}else{
+					System.out.print("   ");
+				}
+				
+			}
+			System.out.println();
+		}
+		
 		pitIsAdjacent();
 		batsAreAdjacent();
 		wumpusIsAdjacent();
@@ -399,9 +414,10 @@ public class WumpusMap {
 		if (caverns[player.getPosX()][player.getPosY()].getHasArrow()) {
 			playerArrows += 1;
 			output("You picked up an arrow! You now have " + playerArrows + " arrows");
-		}
+		
 		Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 		caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern - 1);
+		}
 		caverns[player.getPosX()][player.getPosY()].setHasArrow(false);
 	}
 	
