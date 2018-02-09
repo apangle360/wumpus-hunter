@@ -38,7 +38,6 @@ public class WumpusMap {
 		testmap.setCavernHasPit(testmap.caverns[2][2]);
 		testmap.setCavernHasBat(testmap.caverns[3][2]);
 		testmap.setCavernHasArrow(testmap.caverns[1][2]);
-		testmap.setCavernHasWumpus(testmap.caverns[2][2]);
 		testmap.setPlayerArrows(5);
 		testmap.setWumpusXY(2, 2);
 		testmap.getPlayer().setPlayerPos(1, 1);
@@ -132,6 +131,7 @@ public class WumpusMap {
 		String alertMessage = "Error message not assigned!"; 
 		if (playerArrows <= 0) {
 			alertMessage = "Out of arrows!";
+			System.out.println("Out of arrows!");
 			return alertMessage;
 		}
 		if (shotDirection == 'E') {
@@ -183,36 +183,52 @@ public class WumpusMap {
 			if (movementOption == 4)
 				wumpusY = wumpusY - 1;
 		} while (!validateCavern(wumpusX, wumpusY));
-		
+		System.out.println("The Wumpus moved!");
 	}
 	
 	public String movePlayer(char movementOption){
 			if (movementOption == 'E'){
 				if(validateCavern(player.getPosX() + 1, player.getPosY())) {
 					player.setPosX(player.getPosX() + 1);
+					System.out.println("You move East.");
 				}
-			else return ("You cannot go East from here."); 
+			else {
+				System.out.println("You cannot go East from here.");
+				return ("You cannot go East from here."); 
+			}
 			}
 			if (movementOption == 'W'){
 				if(validateCavern(player.getPosX() - 1, player.getPosY())) {
 					player.setPosX(player.getPosX() - 1);
+					System.out.println("You move West.");
 				}
-			else return ("You cannot go West from here.");  
+			else {
+				System.out.println("You cannot go West from here.");
+				return ("You cannot go West from here.");  
+			}
 			}
 			if (movementOption == 'N'){
 				if(validateCavern(player.getPosX(), player.getPosY() + 1)) {
 					player.setPosY(player.getPosY() + 1);
+					System.out.println("You move North.");
 				}
-			else return ("You cannot go North from here."); 
+			else {
+				System.out.println("You cannot go North from here.");
+				return ("You cannot go North from here."); 
+			}
 			}
 			if (movementOption == 'S'){
 				if(validateCavern(player.getPosX(), player.getPosY() - 1)) {
 					player.setPosY(player.getPosY() - 1);
+					System.out.println("You move South.");
 				}
-			else return "You cannot go South from here.";  
+			else {
+				System.out.println("You cannot go South from here.");
+				return "You cannot go South from here.";  
+			}
 			}
 			if (movementOption == 'R'){
-				  
+				System.out.println("You rested");
 			}
 			return "Movement successful";
 	}
