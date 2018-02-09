@@ -34,8 +34,8 @@ public class WumpusMap {
 	
 	public void playerTurn(){
 		
-		for(int i = 4; i >= 0; i-- ) {
-			for(int j = 0; j < 5; j++ ) {
+		for(int i = 6; i >= 0; i-- ) {
+			for(int j = 0; j < 7; j++ ) {
 				if (getCaverns()[i][j].getIsBoundary()){
 					System.out.print(" X ");
 				}else if (getPlayer().getPosX() == j && getPlayer().getPosY() == i){
@@ -65,6 +65,10 @@ public class WumpusMap {
 			output("invalid input");
 			continue;
 		}
+		if (!(option == 1 || option == 2 || option == 3)){
+			output("invalid input");
+			continue;
+		}
 		inputEntered = true;
 		}
 		if (option == 1)
@@ -77,16 +81,18 @@ public class WumpusMap {
 	}
 	
 	public void wumpusTurn(){
-		moveWumpus();
-		if (!playerDeathCheck()){
-			playerTurn();
-		} else {
-			gameOver();
+		if (!gameIsOver){
+			moveWumpus();
+			if (!playerDeathCheck()){
+				playerTurn();
+			} else {
+				gameOver();
+			}
 		}
 	}
 	
 	public void gameOver(){
-		output("G A M E O V E R");
+		
 		setGameOver(true);
 	}
 	
@@ -104,7 +110,22 @@ public class WumpusMap {
 		output("Press E to move east");
 		output("Press W to move west");
 		output("Press S to move south");
-		String option = reader.next();
+		boolean inputEntered = false;
+		String option = "option";
+		while (!inputEntered){
+		try{
+		reader = new Scanner(System.in);
+		option = reader.next();
+		}catch (Exception ex){
+			output("invalid input");
+			continue;
+		}
+		if (!(option.charAt(0) == 'N' || option.charAt(0) == 'E' || option.charAt(0) == 'S' || option.charAt(0) == 'W')){
+			output("invalid input");
+			continue;
+		}
+		inputEntered = true;
+		}
 		Cavern[][] cavern = getCaverns();
 		movePlayer(option.charAt(0));
 		do{roomCheck();}
@@ -124,10 +145,30 @@ public class WumpusMap {
 		output("Press E to shoot east");
 		output("Press W to shoot west");
 		output("Press S to shoot south");
-		String option = reader.next();
+		boolean inputEntered = false;
+		String option = "option";
+		while (!inputEntered){
+		try{
+		reader = new Scanner(System.in);
+		option = reader.next();
+		}catch (Exception ex){
+			output("invalid input");
+			continue;
+		}
+		if (!(option.charAt(0) == 'N' || option.charAt(0) == 'E' || option.charAt(0) == 'S' || option.charAt(0) == 'W')){
+			output("invalid input");
+			continue;
+		}
+		inputEntered = true;
+		}
 		//if (isInvalidDirection(option.charAt(0))
+		
+		if (playerArrows >= 1){
 		playerShootArrow(option.charAt(0));
 		isWumpusHitCheck(option.charAt(0));
+		}else{
+			output("You are out of arrows!");
+		}
 	}
 	
 	//public boolean
@@ -487,14 +528,17 @@ public class WumpusMap {
 		Cavern[][] cavern = getCaverns();
 		if(getWumpusX() == player.getPosX() && getWumpusY() == player.getPosY()) {
 			System.out.println("The Wumpus has found you!");
+			setGameOver(true);
 			return true;
 		}
 		if(cavern[player.getPosX()][player.getPosY()].getHasPit()) {
 			System.out.println("You walked into a pit! How unfortunate!");
+			setGameOver(true);
 			return true;
 		}
 		if(cavern[player.getPosX()][player.getPosY()].getHasArrow()) {
 			System.out.println("You shot yourself!  Good aim.");
+			setGameOver(true);
 			return true;
 		}
 		return false;

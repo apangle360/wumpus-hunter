@@ -9,12 +9,12 @@ public class HuntTheWumpus2TheReckoning {
 		do{
 		System.out.println("WUMPUS HUNTER 2:");
 		System.out.println("THE RECKONING");
-		WumpusMap gameMap = new WumpusMap(5,5);
-		gameMap.setCavernHasPit(gameMap.getCaverns()[2][2]);
+		WumpusMap gameMap = new WumpusMap(7,7);
+		gameMap.setCavernHasPit(gameMap.getCaverns()[3][3]);
 		gameMap.setCavernHasBat(gameMap.getCaverns()[3][2]);
-		gameMap.setCavernHasWumpus(gameMap.getCaverns()[2][2]);
+		gameMap.setCavernHasWumpus(gameMap.getCaverns()[3][4]);
 		gameMap.setPlayerArrows(5);
-		gameMap.setWumpusXY(2, 2);
+		gameMap.setWumpusXY(3, 4);
 		gameMap.getPlayer().setPlayerPos(1, 1);
 		
 		System.out.println();
@@ -22,11 +22,11 @@ public class HuntTheWumpus2TheReckoning {
 		
 		
 		
-		for(int i = 0; i < 5; i++ ) {
+		for(int i = 0; i < 7; i++ ) {
 			gameMap.setBoundaryCavern(0, i);
 			gameMap.setBoundaryCavern(i, 0);
-			gameMap.setBoundaryCavern(i, 4);
-			gameMap.setBoundaryCavern(4, i);
+			gameMap.setBoundaryCavern(i, 6);
+			gameMap.setBoundaryCavern(6, i);
 		}
 		
 		
@@ -36,6 +36,7 @@ public class HuntTheWumpus2TheReckoning {
 			
 			gameMap.playerTurn();
 		}
+		System.out.println("G A M E O V E R");
 		System.out.println("Play again?");
 		Scanner reader = new Scanner(System.in);
 		System.out.println("Press Y to Play Again.");
