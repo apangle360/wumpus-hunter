@@ -28,6 +28,8 @@ public class HuntTheWumpus2TheReckoning {
 			gameMap.setBoundaryCavern(i, 6);
 			gameMap.setBoundaryCavern(6, i);
 		}
+		gameMap.setBoundaryCavern(5, 4);
+		gameMap.setBoundaryCavern(4, 4);
 		
 		
 		
