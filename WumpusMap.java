@@ -258,7 +258,7 @@ public class WumpusMap {
 			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
 			if (!(player.getPosX() == getFinalArrowX() && player.getPosY() == getFinalArrowY()))
-				System.out.println("You hear a clunk in the distance...");
+				alertMessage = alertMessage + "You hear a clunk in the distance...";
 			playerArrows -= 1; 
 		}
 		if (shotDirection == 'W') {
@@ -270,7 +270,7 @@ public class WumpusMap {
 			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
 			if (!(player.getPosX() == getFinalArrowX() && player.getPosY() == getFinalArrowY()))
-				System.out.println("You hear a clunk in the distance...");
+				alertMessage = alertMessage + "You hear a clunk in the distance...";
 			playerArrows -= 1; 
 		}
 		if (shotDirection == 'N') {
@@ -282,7 +282,7 @@ public class WumpusMap {
 			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
 			if (!(player.getPosX() == getFinalArrowX() && player.getPosY() == getFinalArrowY()))
-				System.out.println("You hear a clunk in the distance...");
+				alertMessage = alertMessage + "You hear a clunk in the distance...";
 			playerArrows -= 1; 
 		}
 		if (shotDirection == 'S') {
@@ -294,7 +294,7 @@ public class WumpusMap {
 			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
 			if (!(player.getPosX() == getFinalArrowX() && player.getPosY() == getFinalArrowY()))
-				System.out.println("You hear a clunk in the distance...");
+				alertMessage = alertMessage + "You hear a clunk in the distance...";
 			playerArrows -= 1; 
 		}
 		System.out.println(alertMessage);
