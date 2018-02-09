@@ -1,9 +1,5 @@
 package fixtures;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
 import main.Player;
 import main.WumpusMap;
 

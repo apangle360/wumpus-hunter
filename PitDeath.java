@@ -21,6 +21,13 @@ public class PitDeath {
 		this.direction = direction;
 	}
 	
+	public void posX(Integer extra){
+		
+	}
+	
+public void posY(Integer extra){
+		
+	}
 	public String status(){
 		testMap.setWumpusXY(3, 3);
 		testMap.movePlayer(direction);
@@ -29,4 +36,3 @@ public class PitDeath {
 	}
 	
 }
-
