@@ -257,6 +257,8 @@ public class WumpusMap {
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
 			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
+			if (!(player.getPosX() == getFinalArrowX() && player.getPosY() == getFinalArrowY()))
+				System.out.println("You hear a clunk in the distance...");
 			playerArrows -= 1; 
 		}
 		if (shotDirection == 'W') {
@@ -267,6 +269,8 @@ public class WumpusMap {
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
 			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
+			if (!(player.getPosX() == getFinalArrowX() && player.getPosY() == getFinalArrowY()))
+				System.out.println("You hear a clunk in the distance...");
 			playerArrows -= 1; 
 		}
 		if (shotDirection == 'N') {
@@ -277,6 +281,8 @@ public class WumpusMap {
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
 			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
+			if (!(player.getPosX() == getFinalArrowX() && player.getPosY() == getFinalArrowY()))
+				System.out.println("You hear a clunk in the distance...");
 			playerArrows -= 1; 
 		}
 		if (shotDirection == 'S') {
@@ -287,6 +293,8 @@ public class WumpusMap {
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
 			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
+			if (!(player.getPosX() == getFinalArrowX() && player.getPosY() == getFinalArrowY()))
+				System.out.println("You hear a clunk in the distance...");
 			playerArrows -= 1; 
 		}
 		System.out.println(alertMessage);
@@ -412,11 +420,9 @@ public class WumpusMap {
 		Player player = getPlayer();
 		Cavern[][] caverns = getCaverns();
 		if (caverns[player.getPosX()][player.getPosY()].getHasArrow()) {
-			playerArrows += 1;
+			playerArrows += caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
 			output("You picked up an arrow! You now have " + playerArrows + " arrows");
-		
-		Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
-		caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern - 1);
+			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(0);
 		}
 		caverns[player.getPosX()][player.getPosY()].setHasArrow(false);
 	}
@@ -451,7 +457,7 @@ public class WumpusMap {
 				return true; 
 			}
 		}
-		System.out.println("You hear a clunk in the distance...");
+		
 		return false;
 	}
 	
