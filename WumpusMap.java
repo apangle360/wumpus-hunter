@@ -426,24 +426,28 @@ public class WumpusMap {
 		if (direction == 'E') {
 			if (getWumpusY() == player.getPosY() && getWumpusX() > player.getPosX()){
 				System.out.println("Wumpus Hit! You have slain the monster");
+				this.setGameOver(true);
 				return true;
 			}
 		}
 		if (direction == 'W') {
 			if (getWumpusY() == player.getPosY() && getWumpusX() < player.getPosX()){
 				System.out.println("Wumpus Hit! You have slain the monster");
+				this.setGameOver(true);
 				return true; 
 			}
 		}
 		if (direction == 'N') {
 			if (getWumpusX() == player.getPosX() && getWumpusY() > player.getPosY()){
 				System.out.println("Wumpus Hit! You have slain the monster");
+				this.setGameOver(true);
 				return true; 
 			}
 		}
 		if (direction == 'S') {
 			if (getWumpusX() == player.getPosX() && getWumpusY() < player.getPosY()){
 				System.out.println("Wumpus Hit! You have slain the monster");
+				this.setGameOver(true);
 				return true; 
 			}
 		}
