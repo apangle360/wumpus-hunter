@@ -27,13 +27,13 @@ public class WumpusDeath {
 		testMap.setWumpusY(wumpusY);
 	}
 	
-	public void setDirection(char shootDirection) {
+	public void setShootDirection(char shootDirection) {
 		this.shootDirection = shootDirection;
 	}
 	
 	public boolean wumpusDeath(){
 		testMap.playerShootArrow(shootDirection);
-		testMap.isWumpusHitCheck(shootDirection);
-		return testMap.playerDeathCheck();
+		return testMap.isWumpusHitCheck(shootDirection);
+		//return testMap.playerDeathCheck();
 	}
 }

@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class WumpusMap {
 	private Integer numberOfCaverns = 0;
@@ -13,6 +14,9 @@ public class WumpusMap {
 	private Integer playerArrows;
 	private Integer finalArrowX;
 	private Integer finalArrowY;
+	private Integer numberOfBoundaryCaverns = 0;
+	private Scanner reader;
+	private boolean gameIsOver = false;
 	
 	public WumpusMap(Integer xSize, Integer ySize){
 		this.player = new Player(1, 1);
@@ -24,7 +28,97 @@ public class WumpusMap {
 				numberOfCaverns++;
 			}
 		}
-		
+		output("You enter a spoooooky cave system.");
+		reader = new Scanner(System.in);
+	}
+	
+	public void playerTurn(){
+		pitIsAdjacent();
+		batsAreAdjacent();
+		wumpusIsAdjacent();
+		output("What would you like to do? Select from options below:");
+		output("Press 1 to Rest");
+		output("Press 2 to Move");
+		output("Press 3 to Shoot");
+		boolean inputEntered = false;
+		int option = 0;
+		while (!inputEntered){
+		try{
+		reader = new Scanner(System.in);
+		option = reader.nextInt();
+		}catch (Exception ex){
+			output("invalid input");
+			continue;
+		}
+		inputEntered = true;
+		}
+		if (option == 1)
+			output("You take a breather for a bit");
+		if (option == 2)
+			movementDirection();
+		if (option == 3)
+			arrowDirection();
+		wumpusTurn();
+	}
+	
+	public void wumpusTurn(){
+		moveWumpus();
+		if (!playerDeathCheck()){
+			playerTurn();
+		} else {
+			gameOver();
+		}
+	}
+	
+	public void gameOver(){
+		output("G A M E O V E R");
+		setGameOver(true);
+	}
+	
+	public boolean getGameOver(){
+		return gameIsOver;
+	}
+	
+	public void setGameOver(boolean gameState){
+		this.gameIsOver = gameState;
+	}
+	
+	public void movementDirection(){
+		output("Choose a direction to move:");
+		output("Press N to move north");
+		output("Press E to move east");
+		output("Press W to move west");
+		output("Press S to move south");
+		String option = reader.next();
+		Cavern[][] cavern = getCaverns();
+		movePlayer(option.charAt(0));
+		do{roomCheck();}
+		while (cavern[getPlayer().getPosX()][getPlayer().getPosY()].getHasBat());
+		roomCheck();
+		playerDeathCheck();
+	}
+	
+	public void roomCheck() {
+		arrowCheck();
+		batCheck();
+	}
+	
+	public void arrowDirection(){
+		output("Choose a direction to shoot:");
+		output("Press N to shoot north");
+		output("Press E to shoot east");
+		output("Press W to shoot west");
+		output("Press S to shoot south");
+		String option = reader.next();
+		//if (isInvalidDirection(option.charAt(0))
+		playerShootArrow(option.charAt(0));
+		isWumpusHitCheck(option.charAt(0));
+	}
+	
+	//public boolean
+	
+	public void output(String text){
+		System.out.println(text);
 	}
 	
 	public static WumpusMap generateWumpusTestMap() {
@@ -38,7 +132,8 @@ public class WumpusMap {
 		testmap.setCavernHasPit(testmap.caverns[2][2]);
 		testmap.setCavernHasBat(testmap.caverns[3][2]);
 		testmap.setCavernHasArrow(testmap.caverns[1][2]);
-		testmap.setPlayerArrows(5);
+		testmap.setCavernHasWumpus(testmap.caverns[2][2]);
+		testmap.setPlayerArrows(4);
 		testmap.setWumpusXY(2, 2);
 		testmap.getPlayer().setPlayerPos(1, 1);
 		return testmap; 
@@ -55,6 +150,11 @@ public class WumpusMap {
 	
 	public void setBoundaryCavern(int boundaryX, int boundaryY){
 		caverns[boundaryX][boundaryY].setIsBoundary(true);
+		numberOfBoundaryCaverns++;
+	}
+	
+	public Integer getNumberOfInhabitableCaverns(){
+		return numberOfCaverns - numberOfBoundaryCaverns; 
 	}
 	
 	public void setCavernHasPit(Cavern cavern){
@@ -128,10 +228,10 @@ public class WumpusMap {
 	}
 	
 	public String playerShootArrow(char shotDirection) {
-		String alertMessage = "Error message not assigned!"; 
+		String alertMessage = ("You shoot an arrow. You now have " + (getPlayerArrows()-1) + " arrows."); 
 		if (playerArrows <= 0) {
-			alertMessage = "Out of arrows!";
-			System.out.println("Out of arrows!");
+			alertMessage = "You are out of arrows!";
+			System.out.println(alertMessage);
 			return alertMessage;
 		}
 		if (shotDirection == 'E') {
@@ -140,6 +240,8 @@ public class WumpusMap {
 				setFinalArrowXY(getFinalArrowX() +1, getFinalArrowY());
 			}			
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
+			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
+			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
 			playerArrows -= 1; 
 		}
 		if (shotDirection == 'W') {
@@ -148,6 +250,8 @@ public class WumpusMap {
 				setFinalArrowXY(getFinalArrowX() - 1, getFinalArrowY());
 			}			
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
+			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
+			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
 			playerArrows -= 1; 
 		}
 		if (shotDirection == 'N') {
@@ -156,6 +260,8 @@ public class WumpusMap {
 				setFinalArrowXY(getFinalArrowX(), getFinalArrowY() + 1);
 			}			
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
+			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
+			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
 			playerArrows -= 1; 
 		}
 		if (shotDirection == 'S') {
@@ -164,15 +270,22 @@ public class WumpusMap {
 				setFinalArrowXY(getFinalArrowX(), getFinalArrowY() - 1);
 			}			
 			setCavernHasArrow(caverns[getFinalArrowX()][getFinalArrowY()]);
+			Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
+			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern + 1);
 			playerArrows -= 1; 
 		}
-		
+		System.out.println(alertMessage);
 		return alertMessage;
 }
 	
 	public void moveWumpus(){
 		Random randomGenerator = new Random();
+		Integer originalWumpusX = wumpusX;
+		Integer originalWumpusY = wumpusY;
+		
 		do{
+			wumpusX = originalWumpusX;
+			wumpusY = originalWumpusY;
 			Integer movementOption = (int) randomGenerator.nextInt(5);
 			if (movementOption == 1)
 				wumpusX = wumpusX + 1;
@@ -183,52 +296,52 @@ public class WumpusMap {
 			if (movementOption == 4)
 				wumpusY = wumpusY - 1;
 		} while (!validateCavern(wumpusX, wumpusY));
-		System.out.println("The Wumpus moved!");
+		
 	}
 	
 	public String movePlayer(char movementOption){
 			if (movementOption == 'E'){
 				if(validateCavern(player.getPosX() + 1, player.getPosY())) {
 					player.setPosX(player.getPosX() + 1);
-					System.out.println("You move East.");
+					output("You move east.");
 				}
-			else {
-				System.out.println("You cannot go East from here.");
+			else { 
+				output("You cannot go East from here.");
 				return ("You cannot go East from here."); 
-			}
+				}
 			}
 			if (movementOption == 'W'){
 				if(validateCavern(player.getPosX() - 1, player.getPosY())) {
 					player.setPosX(player.getPosX() - 1);
-					System.out.println("You move West.");
+					output("You move west.");
 				}
 			else {
-				System.out.println("You cannot go West from here.");
-				return ("You cannot go West from here.");  
-			}
+				output("You cannot go West from here.");
+				return ("You cannot go West from here."); 
+				} 
 			}
 			if (movementOption == 'N'){
 				if(validateCavern(player.getPosX(), player.getPosY() + 1)) {
 					player.setPosY(player.getPosY() + 1);
-					System.out.println("You move North.");
+					output("You move north.");
 				}
 			else {
-				System.out.println("You cannot go North from here.");
-				return ("You cannot go North from here."); 
-			}
+				output("You cannot go North from here.");
+				return ("You cannot go North from here.");
+				}
 			}
 			if (movementOption == 'S'){
 				if(validateCavern(player.getPosX(), player.getPosY() - 1)) {
 					player.setPosY(player.getPosY() - 1);
-					System.out.println("You move South.");
+					output("You move south.");
 				}
 			else {
-				System.out.println("You cannot go South from here.");
-				return "You cannot go South from here.";  
-			}
+				output("You cannot go South from here.");
+				return "You cannot go South from here.";
+				}  
 			}
 			if (movementOption == 'R'){
-				System.out.println("You rested");
+				  
 			}
 			return "Movement successful";
 	}
@@ -251,13 +364,14 @@ public class WumpusMap {
 	}
 	
 	public boolean batsAreAdjacent(){
+		boolean batFound = false;
 		for (Cavern cavern : getAdjacentCaverns()){
 			if (cavern.getHasBat()){
 				System.out.println("You hear the chirping of bats.");
-				return true;
+				batFound = true;
 			}
 		}
-		return false;
+		return batFound;
 	}
 	
 	public boolean pitIsAdjacent(){
@@ -284,41 +398,40 @@ public class WumpusMap {
 		Cavern[][] caverns = getCaverns();
 		if (caverns[player.getPosX()][player.getPosY()].getHasArrow()) {
 			playerArrows += 1;
+			output("You picked up an arrow! You now have " + playerArrows + " arrows");
 		}
+		Integer arrowsInEndCavern = caverns[getFinalArrowX()][getFinalArrowY()].getNumberOfArrows();
+		caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(arrowsInEndCavern - 1);
 		caverns[player.getPosX()][player.getPosY()].setHasArrow(false);
-	}
-	
-	public void batCheck() {
-		Player player = getPlayer();
-		Cavern[][] caverns = getCaverns();
-		if (caverns[player.getPosX()][player.getPosY()].getHasBat()) {
-			batWarp();
-		}
 	}
 	
 	public boolean isWumpusHitCheck(char direction) {
 		Player player = getPlayer();
 		if (direction == 'E') {
-			if (getWumpusY() == player.getPosY() && getWumpusX() > player.getPosX())
+			if (getWumpusY() == player.getPosY() && getWumpusX() > player.getPosX()){
 				System.out.println("Wumpus Hit! You have slain the monster");
 				return true;
+			}
 		}
 		if (direction == 'W') {
-			if (getWumpusY() == player.getPosY() && getWumpusX() < player.getPosX())
+			if (getWumpusY() == player.getPosY() && getWumpusX() < player.getPosX()){
 				System.out.println("Wumpus Hit! You have slain the monster");
 				return true; 
+			}
 		}
 		if (direction == 'N') {
-			if (getWumpusX() == player.getPosX() && getWumpusY() > player.getPosY())
+			if (getWumpusX() == player.getPosX() && getWumpusY() > player.getPosY()){
 				System.out.println("Wumpus Hit! You have slain the monster");
 				return true; 
+			}
 		}
 		if (direction == 'S') {
-			if (getWumpusX() == player.getPosX() && getWumpusY() < player.getPosY())
+			if (getWumpusX() == player.getPosX() && getWumpusY() < player.getPosY()){
 				System.out.println("Wumpus Hit! You have slain the monster");
 				return true; 
+			}
 		}
-		System.out.println("You hear a dull thud in the distance...");
+		System.out.println("You hear a clunk in the distance...");
 		return false;
 	}
 	
@@ -327,13 +440,21 @@ public class WumpusMap {
 		Player player = this.getPlayer();
 		
 		do{
-			int movementOptionX = (int) randomGenerator.nextInt(3) + 1;
-			int movementOptionY = (int) randomGenerator.nextInt(3) + 1;
+			int movementOptionX = (int) randomGenerator.nextInt(caverns.length - 2) + 1;
+			int movementOptionY = (int) randomGenerator.nextInt(caverns[0].length - 2) + 1;
 			player.setPlayerPos(movementOptionX, movementOptionY);
 		} while (!validateCavern(player.getPosX(), player.getPosY()));
 		getPlayer().setPlayerPos(player.getPosX(), player.getPosY());
 		System.out.println("Bats fly you to an different location!");
 	}
+	
+	public void batCheck() {
+			Player player = getPlayer();
+			Cavern[][] caverns = getCaverns();
+			if (caverns[player.getPosX()][player.getPosY()].getHasBat()) {
+				batWarp();
+			}
+		}
 	
 	public boolean playerDeathCheck() {
 		Player player = getPlayer();
@@ -351,7 +472,6 @@ public class WumpusMap {
 			return true;
 		}
 		return false;
-	}
-	
+}
 	
 }

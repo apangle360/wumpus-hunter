@@ -6,9 +6,18 @@ public class Cavern {
 	private boolean hasPit;
 	private boolean isBoundary = false;
 	private boolean hasWumpus;
+	private Integer numberOfArrows = 0;
 	
 	public Cavern(){
 		
+	}
+	
+	public void setNumberOfArrows(Integer numberOfArrows){
+		this.numberOfArrows = numberOfArrows;
+	}
+	
+	public Integer getNumberOfArrows(){
+		return numberOfArrows;
 	}
 	
 	public boolean getHasBat(){
