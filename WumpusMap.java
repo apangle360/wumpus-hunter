@@ -458,7 +458,7 @@ public class WumpusMap {
 	}
 	
 	public void arrowCheck() {
-		caverns[getFinalArrowX()][getFinalArrowY()].setHasArrow(false);
+		
 		Player player = getPlayer();
 		Cavern[][] caverns = getCaverns();
 		if (caverns[player.getPosX()][player.getPosY()].getHasArrow()) {
@@ -466,7 +466,7 @@ public class WumpusMap {
 			output("You picked up an arrow! You now have " + playerArrows + " arrows");
 			caverns[getFinalArrowX()][getFinalArrowY()].setNumberOfArrows(0);
 		}
-		caverns[getFinalArrowX()][getFinalArrowY()].setHasArrow(false);
+		caverns[getFinalArrowX()][getFinalArrowX()].setHasArrow(false);
 	}
 	
 	public boolean isWumpusHitCheck(char direction) {

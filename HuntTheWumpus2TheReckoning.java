@@ -35,7 +35,6 @@ public class HuntTheWumpus2TheReckoning {
 		
 		
 		while (!gameMap.getGameOver()){
-			
 			gameMap.playerTurn();
 		}
 		System.out.println("G A M E O V E R");
